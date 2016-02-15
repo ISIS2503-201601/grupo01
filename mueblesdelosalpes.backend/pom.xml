@@ -7,7 +7,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>ejb</packaging>
 
-    <name>mueblesdelosalpes.backend</name>
+    <name>sndat.backend</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
