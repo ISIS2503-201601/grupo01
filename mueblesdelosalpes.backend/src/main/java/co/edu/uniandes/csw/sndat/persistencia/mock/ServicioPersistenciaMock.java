@@ -15,7 +15,7 @@ package co.edu.uniandes.csw.sndat.persistencia.mock;
 
 import co.edu.uniandes.csw.sndat.dto.ExperienciaVendedor;
 import co.edu.uniandes.csw.sndat.dto.Mueble;
-import co.edu.uniandes.csw.sndat.dto.Oferta;
+import co.edu.uniandes.csw.sndat.dto.Reporte;
 import co.edu.uniandes.csw.sndat.dto.RegistroVenta;
 import co.edu.uniandes.csw.sndat.dto.TipoMueble;
 import co.edu.uniandes.csw.sndat.dto.TipoUsuario;
@@ -62,7 +62,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     private static ArrayList<RegistroVenta> registrosVentas;
     
-    private static ArrayList<Oferta> ofertas;
+    private static ArrayList<Reporte> reportes;
 
     //-----------------------------------------------------------
     // Constructor
@@ -122,8 +122,8 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 venta.setCiudad("Bogotá");
             }
             
-            ofertas = new ArrayList<Oferta>();
-            ofertas.add(new Oferta(5, "s.linan10", 1L, 5));
+            reportes = new ArrayList<Reporte>();
+            reportes.add(new Reporte(1, 8,8));
         }
     }
 
@@ -172,9 +172,9 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             registrosVentas.add((RegistroVenta) obj);
         }
         
-        else if (obj instanceof Oferta)
+        else if (obj instanceof Reporte)
         {
-            ofertas.add((Oferta)obj);
+            reportes.add((Reporte)obj);
         }
     }
 
@@ -230,17 +230,17 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
-        else if (obj instanceof Oferta)
+        else if (obj instanceof Reporte)
         {
-            Oferta editar = (Oferta) obj;
-            Oferta of;
+            Reporte editar = (Reporte) obj;
+            Reporte of;
             
-            for(int i=0; i<ofertas.size(); i++)
+            for(int i=0; i<reportes.size(); i++)
             {
-                of = ofertas.get(i);
-                if(of.getIdOferta() == editar.getIdOferta())
+                of = reportes.get(i);
+                if(of.getIdReporte() == editar.getIdReporte())
                 {
-                    ofertas.set(i, editar);
+                    reportes.set(i, editar);
                     break;
                 }
                     
@@ -287,15 +287,15 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
 
         } 
         
-        else if (obj instanceof Oferta)
+        else if (obj instanceof Reporte)
         {
-            Oferta of = (Oferta) obj;
-            Oferta actual;
-            for(int i=0; i < ofertas.size(); i++)
+            Reporte of = (Reporte) obj;
+            Reporte actual;
+            for(int i=0; i < reportes.size(); i++)
             {
-                actual=ofertas.get(i);
-                if(actual.getIdOferta()==of.getIdOferta()){
-                    ofertas.remove(i);
+                actual=reportes.get(i);
+                if(actual.getIdReporte()==of.getIdReporte()){
+                    reportes.remove(i);
                     break;
                     
                 }
@@ -353,9 +353,9 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             return registrosVentas;
         } 
         
-        else if (c.equals(Oferta.class))
+        else if (c.equals(Reporte.class))
         {
-            return ofertas;
+            return reportes;
         }
         else
         {
@@ -383,12 +383,12 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
-        else if(c.equals(Oferta.class))
+        else if(c.equals(Reporte.class))
         {
             for(Object o: findAll(c))
             {
-                Oferta of = (Oferta) o;
-                if(of.getIdOferta()== Integer.parseInt(id.toString()))
+                Reporte of = (Reporte) o;
+                if(of.getIdReporte()== Integer.parseInt(id.toString()))
                 {
                     return of;
                 }

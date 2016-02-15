@@ -5,8 +5,7 @@
  */
 package co.edu.uniandes.csw.sndat.logica.interfaces;
 
-import co.edu.uniandes.csw.sndat.dto.Mueble;
-import co.edu.uniandes.csw.sndat.dto.Oferta;
+import co.edu.uniandes.csw.sndat.dto.Reporte;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,12 +15,10 @@ import javax.ejb.Local;
  */
 
 @Local
-public interface IServicioOfertaMockLocal {
+public interface IServicioReporteSensorMockLocal {
     
-    public void agregarOferta(Oferta oferta);
+    public void agregarReporte(Reporte reporte);
     
-    public void eliminarOferta(int idOferta);
-    
-    public List<Oferta> darOfertas();
+    public List<Reporte> darReportes();
     
 }

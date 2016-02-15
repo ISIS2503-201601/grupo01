@@ -5,35 +5,35 @@
  */
 package co.edu.uniandes.csw.sndat.logica.ejb;
 
-import co.edu.uniandes.csw.sndat.dto.Oferta;
+import co.edu.uniandes.csw.sndat.dto.Reporte;
 import co.edu.uniandes.csw.sndat.excepciones.OperacionInvalidaException;
-import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioOfertaMockLocal;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.sndat.persistencia.mock.ServicioPersistenciaMock;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioReporteSensorMockLocal;
 
 /**
  *
  * @author s.linan10
  */
 @Stateless
-public class ServicioOfertaMock implements IServicioOfertaMockLocal {
+public class ServicioReporteMock implements IServicioReporteSensorMockLocal {
     
     private IServicioPersistenciaMockLocal persistencia;
     
-    public ServicioOfertaMock()
+    public ServicioReporteMock()
     {
         persistencia = new ServicioPersistenciaMock();
     }
 
-    public void agregarOferta(Oferta oferta) {
+    public void agregarReporte(Reporte reporte) {
         
         try
         {
-            persistencia.create(oferta);
+            persistencia.create(reporte);
         }
          catch (OperacionInvalidaException ex)
         {
@@ -42,23 +42,9 @@ public class ServicioOfertaMock implements IServicioOfertaMockLocal {
         
     }
 
-    public void eliminarOferta(int idOferta) {
+    public List<Reporte> darReportes() {
         
-        Oferta oferta = (Oferta) persistencia.findById(Oferta.class, idOferta);
-        try
-        {
-            persistencia.delete(oferta);
-        }
-        catch (OperacionInvalidaException ex)
-        {
-            Logger.getLogger(ServicioCatalogoMock.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-
-    public List<Oferta> darOfertas() {
-        
-        return persistencia.findAll(Oferta.class);
+        return persistencia.findAll(Reporte.class);
     }
     
 }

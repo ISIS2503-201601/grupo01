@@ -5,8 +5,7 @@
  */
 package co.edu.uniandes.csw.sndat.servicios;
 
-import co.edu.uniandes.csw.sndat.dto.Oferta;
-import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioOfertaMockLocal;
+import co.edu.uniandes.csw.sndat.dto.Reporte;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -16,36 +15,37 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioReporteSensorMockLocal;
 
 /**
  *
  * @author s.linan10
  */
-@Path("/oferta")
+@Path("/ReporteSensor")
 @Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class OfertaService {
+public class ReporteSensor {
     
         @EJB
-        private IServicioOfertaMockLocal ofertaEjb;
+        private IServicioReporteSensorMockLocal reporteEjb;
         
         @GET
-        @Path("ofertas/")
-        public List<Oferta> getTodasLasOfertas()
+        @Path("reportes/")
+        public List<Reporte> getTodosLosReportes()
         {
-            return ofertaEjb.darOfertas();
+            return reporteEjb.darReportes();
         }
         
         @POST
         @Path("agregar/")
-        public List <Oferta> agregarOfertas (List <Oferta> of)
+        public List <Reporte> agregarReportes (List <Reporte> rep)
         {
-            for(Oferta oferta: of)
+            for(Reporte reporte: rep)
             {
-                ofertaEjb.agregarOferta(oferta);
+                reporteEjb.agregarReporte(reporte);
             }
             
-            return of;
+            return rep;
         }
 }
