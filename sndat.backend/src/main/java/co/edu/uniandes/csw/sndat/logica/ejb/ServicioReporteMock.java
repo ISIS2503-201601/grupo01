@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.sndat.logica.ejb;
 
-import co.edu.uniandes.csw.sndat.dto.Reporte;
+import co.edu.uniandes.csw.sndat.dto.ReporteSensor;
 import co.edu.uniandes.csw.sndat.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.sndat.persistencia.mock.ServicioPersistenciaMock;
@@ -29,7 +29,7 @@ public class ServicioReporteMock implements IServicioReporteSensorMockLocal {
         persistencia = new ServicioPersistenciaMock();
     }
 
-    public void agregarReporte(Reporte reporte) {
+    public void agregarReporte(ReporteSensor reporte) {
         
         try
         {
@@ -42,9 +42,10 @@ public class ServicioReporteMock implements IServicioReporteSensorMockLocal {
         
     }
 
-    public List<Reporte> darReportes() {
+    public List<ReporteSensor> darReportes() {
         
-        return persistencia.findAll(Reporte.class);
+        return persistencia.findAll(ReporteSensor.class);
     }
+    
     
 }

@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.sndat.servicios;
 
-import co.edu.uniandes.csw.sndat.dto.Reporte;
+import co.edu.uniandes.csw.sndat.dto.BoletinAlerta;
+import co.edu.uniandes.csw.sndat.dto.EventoSismico;
+import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioEventoSismicoMockLocal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -21,31 +23,28 @@ import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioReporteSensorMockLoc
  *
  * @author s.linan10
  */
-@Path("/ReporteSensor")
+@Path("/EventoSismico")
 @Stateless
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class ReporteSensor {
+public class EventoSismicoService {
     
         @EJB
-        private IServicioReporteSensorMockLocal reporteEjb;
+        private IServicioEventoSismicoMockLocal eventoEjb;
         
         @GET
         //@Path("reportes/")
-        public List<Reporte> getTodosLosReportes()
+        public List<EventoSismico> getTodosLosEventos()
         {
-            return reporteEjb.darReportes();
+            return eventoEjb.darEventos();
         }
         
         @POST
        // @Path("agregar/")
-        public List <Reporte> agregarReportes (List <Reporte> rep)
+        public BoletinAlerta  agregarEvento (EventoSismico ev)
         {
-            for(Reporte reporte: rep)
-            {
-                reporteEjb.agregarReporte(reporte);
-            }
-            
-            return rep;
+                eventoEjb.agregarEvento(ev);
+                
+            return  eventoEjb.darBoletinAlerta(ev);
         }
 }

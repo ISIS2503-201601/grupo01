@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.sndat.logica.interfaces;
 
+import co.edu.uniandes.csw.sndat.dto.BoletinAlerta;
+import co.edu.uniandes.csw.sndat.dto.EventoSismico;
 import co.edu.uniandes.csw.sndat.dto.ReporteSensor;
 import java.util.List;
 import javax.ejb.Local;
@@ -15,10 +17,14 @@ import javax.ejb.Local;
  */
 
 @Local
-public interface IServicioReporteSensorMockLocal {
+public interface IServicioEventoSismicoMockLocal {
     
-    public void agregarReporte(ReporteSensor reporte);
+    public void agregarEvento(EventoSismico evento);
     
-    public List<ReporteSensor> darReportes();
+    public List<EventoSismico> darEventos();
+    
+    public BoletinAlerta darBoletinAlerta (EventoSismico evento);
+    
+    
     
 }

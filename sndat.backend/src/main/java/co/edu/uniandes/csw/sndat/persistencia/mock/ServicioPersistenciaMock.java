@@ -13,14 +13,16 @@
 package co.edu.uniandes.csw.sndat.persistencia.mock;
 
 
+import co.edu.uniandes.csw.sndat.dto.EventoSismico;
 import co.edu.uniandes.csw.sndat.dto.ExperienciaVendedor;
 import co.edu.uniandes.csw.sndat.dto.Mueble;
-import co.edu.uniandes.csw.sndat.dto.Reporte;
+import co.edu.uniandes.csw.sndat.dto.ReporteSensor;
 import co.edu.uniandes.csw.sndat.dto.RegistroVenta;
 import co.edu.uniandes.csw.sndat.dto.TipoMueble;
 import co.edu.uniandes.csw.sndat.dto.TipoUsuario;
 import co.edu.uniandes.csw.sndat.dto.Usuario;
 import co.edu.uniandes.csw.sndat.dto.Vendedor;
+import co.edu.uniandes.csw.sndat.dto.ZonaGeografica;
 import co.edu.uniandes.csw.sndat.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioPersistenciaMockRemote;
@@ -33,7 +35,6 @@ import javax.ejb.Stateless;
 
 /**
  * Implementación de los servicios de persistencia
- * @author Juan Sebastián Urrego
  */
 
 public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote, IServicioPersistenciaMockLocal {
@@ -62,7 +63,11 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
      */
     private static ArrayList<RegistroVenta> registrosVentas;
     
-    private static ArrayList<Reporte> reportes;
+    private static ArrayList<ReporteSensor> reportes;
+    
+    private static ArrayList<EventoSismico> eventos;
+    
+    private static ArrayList<ZonaGeografica> zonas;
 
     //-----------------------------------------------------------
     // Constructor
@@ -122,8 +127,24 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 venta.setCiudad("Bogotá");
             }
             
-            reportes = new ArrayList<Reporte>();
-            reportes.add(new Reporte(1, 8,8));
+            reportes = new ArrayList<ReporteSensor>();
+            reportes.add(new ReporteSensor(12, 3, 1212414.4, 123123.34));
+            
+            eventos = new ArrayList<EventoSismico>();
+            eventos.add(new EventoSismico(33.3, 66.3, 99.3));
+            
+            zonas = new ArrayList<ZonaGeografica>();
+            
+            zonas.add(new ZonaGeografica(11.547789, -72.920928, ZonaGeografica.ZONA_ATLANTICO_GUAJIRA, ZonaGeografica.ZONA_ATLANTICO));
+            zonas.add(new ZonaGeografica(11.283611, -73.872483, ZonaGeografica.ZONA_ATLANTICO_MAGDALENA, ZonaGeografica.ZONA_ATLANTICO));
+            zonas.add(new ZonaGeografica(9.389778, -75.788502, ZonaGeografica.ZONA_ATLANTICO_SUCRE, ZonaGeografica.ZONA_ATLANTICO));
+            zonas.add(new ZonaGeografica( 8.988165, -76.278467, ZonaGeografica.ZONA_ATLANTICO_CORDOBA, ZonaGeografica.ZONA_ATLANTICO));
+            zonas.add(new ZonaGeografica(8.606767, -76.899438, ZonaGeografica.ZONA_ATLANTICO_ANTIOQUIA, ZonaGeografica.ZONA_ATLANTICO));
+            zonas.add(new ZonaGeografica( 5.572450, -77.502771, ZonaGeografica.ZONA_PACIFICO_CHOCO, ZonaGeografica.ZONA_PACIFICO));
+            zonas.add(new ZonaGeografica(3.293384, -77.502600, ZonaGeografica.ZONA_PACIFICO_VALLE, ZonaGeografica.ZONA_PACIFICO));
+            zonas.add(new ZonaGeografica(2.735288, -77.778793, ZonaGeografica.ZONA_PACIFICO_CAUCA, ZonaGeografica.ZONA_PACIFICO));
+            zonas.add(new ZonaGeografica(1.795305, -78.870860, ZonaGeografica.ZONA_PACIFICO_NARIÑO, ZonaGeografica.ZONA_PACIFICO));
+
         }
     }
 
@@ -172,9 +193,16 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             registrosVentas.add((RegistroVenta) obj);
         }
         
-        else if (obj instanceof Reporte)
+        else if (obj instanceof ReporteSensor)
         {
-            reportes.add((Reporte)obj);
+            ReporteSensor rep = (ReporteSensor) obj;
+            rep.generateId();
+            reportes.add(rep);
+        }
+        
+         else if (obj instanceof EventoSismico)
+        {
+            eventos.add((EventoSismico)obj);
         }
     }
 
@@ -230,22 +258,6 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
-        else if (obj instanceof Reporte)
-        {
-            Reporte editar = (Reporte) obj;
-            Reporte of;
-            
-            for(int i=0; i<reportes.size(); i++)
-            {
-                of = reportes.get(i);
-                if(of.getIdReporte() == editar.getIdReporte())
-                {
-                    reportes.set(i, editar);
-                    break;
-                }
-                    
-            }
-        }
     }
 
     /**
@@ -287,20 +299,6 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
 
         } 
         
-        else if (obj instanceof Reporte)
-        {
-            Reporte of = (Reporte) obj;
-            Reporte actual;
-            for(int i=0; i < reportes.size(); i++)
-            {
-                actual=reportes.get(i);
-                if(actual.getIdReporte()==of.getIdReporte()){
-                    reportes.remove(i);
-                    break;
-                    
-                }
-            }
-        }
         else if (obj instanceof Usuario)
         {
             Usuario usuarioABorrar = (Usuario) obj;
@@ -353,9 +351,18 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             return registrosVentas;
         } 
         
-        else if (c.equals(Reporte.class))
+        else if (c.equals(ReporteSensor.class))
         {
             return reportes;
+        }
+        
+        else if(c.equals(EventoSismico.class))
+        {
+            return eventos;
+        }
+        else if(c.equals(ZonaGeografica.class))
+        {
+            return zonas;
         }
         else
         {
@@ -383,17 +390,7 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
                 }
             }
         }
-        else if(c.equals(Reporte.class))
-        {
-            for(Object o: findAll(c))
-            {
-                Reporte of = (Reporte) o;
-                if(of.getIdReporte()== Integer.parseInt(id.toString()))
-                {
-                    return of;
-                }
-            }
-        }
+      
         else if (c.equals(Mueble.class))
         {
             for (Object v : findAll(c))
