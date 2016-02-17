@@ -13,6 +13,7 @@
 package co.edu.uniandes.csw.sndat.persistencia.mock;
 
 
+import co.edu.uniandes.csw.sndat.dto.Escenario;
 import co.edu.uniandes.csw.sndat.dto.EventoSismico;
 import co.edu.uniandes.csw.sndat.dto.ExperienciaVendedor;
 import co.edu.uniandes.csw.sndat.dto.Mueble;
@@ -68,6 +69,8 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
     private static ArrayList<EventoSismico> eventos;
     
     private static ArrayList<ZonaGeografica> zonas;
+    
+    private static ArrayList <Escenario> escenarios;
 
     //-----------------------------------------------------------
     // Constructor
@@ -144,6 +147,19 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
             zonas.add(new ZonaGeografica(3.293384, -77.502600, ZonaGeografica.ZONA_PACIFICO_VALLE, ZonaGeografica.ZONA_PACIFICO));
             zonas.add(new ZonaGeografica(2.735288, -77.778793, ZonaGeografica.ZONA_PACIFICO_CAUCA, ZonaGeografica.ZONA_PACIFICO));
             zonas.add(new ZonaGeografica(1.795305, -78.870860, ZonaGeografica.ZONA_PACIFICO_NARIÑO, ZonaGeografica.ZONA_PACIFICO));
+
+            escenarios = new ArrayList<Escenario>();
+            escenarios.add(new Escenario(500, 1, 50, 1, zonas.get(0), Escenario.PERFIL_ALARMA));
+            escenarios.add(new Escenario(400, 10, 50, 1, zonas.get(1), Escenario.PERFIL_INFORMATIVO));
+            escenarios.add(new Escenario(500, 45, 40, 1, zonas.get(2), Escenario.PERFIL_ALARMA));
+            escenarios.add(new Escenario(200, 66, 40, 1, zonas.get(3), Escenario.PERFIL_INFORMATIVO));
+            escenarios.add(new Escenario(100, 50, 40, 1, zonas.get(4), Escenario.PERFIL_ALERTA));
+            escenarios.add(new Escenario(200, 34, 30, 1, zonas.get(5), Escenario.PERFIL_ALARMA));
+            escenarios.add(new Escenario(300, 34, 30, 1, zonas.get(6), Escenario.PERFIL_INFORMATIVO));
+            escenarios.add(new Escenario(400, 34, 30, 1, zonas.get(7), Escenario.PERFIL_ALERTA));
+            escenarios.add(new Escenario(500, 14, 30, 1, zonas.get(8), Escenario.PERFIL_ALARMA));
+            escenarios.add(new Escenario(500, 23, 60, 1, zonas.get(7), Escenario.PERFIL_INFORMATIVO));
+            escenarios.add(new Escenario(700, 400, 70, 1, zonas.get(6), Escenario.PERFIL_ALERTA));
 
         }
     }
@@ -363,6 +379,10 @@ public class ServicioPersistenciaMock implements IServicioPersistenciaMockRemote
         else if(c.equals(ZonaGeografica.class))
         {
             return zonas;
+        }
+        else if(c.equals(Escenario.class))
+        {
+            return escenarios;
         }
         else
         {

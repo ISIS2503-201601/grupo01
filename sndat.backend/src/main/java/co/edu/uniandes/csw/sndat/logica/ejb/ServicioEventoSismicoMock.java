@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.sndat.logica.ejb;
 
 import co.edu.uniandes.csw.sndat.dto.BoletinAlerta;
+import co.edu.uniandes.csw.sndat.dto.Escenario;
 import co.edu.uniandes.csw.sndat.dto.EventoSismico;
 import co.edu.uniandes.csw.sndat.dto.ReporteSensor;
 import co.edu.uniandes.csw.sndat.dto.ZonaGeografica;
@@ -106,12 +107,38 @@ public class ServicioEventoSismicoMock implements IServicioEventoSismicoMockLoca
     {
         return Math.sqrt(Math.pow(latitud - pLatitud, 2)+Math.pow(longitud - pLongitud, 2));
     }
+    
+    public Escenario darEscenarioPremodelado(ZonaGeografica zona, double altura, double tiempo)
+    {
+        List<Escenario> escenarios = persistencia.findAll(Escenario.class);
+        for(int i=0; i<escenarios.size(); i++)
+        {
+            Escenario actual = escenarios.get(i);
+            
+            if(actual.getZona().getNombre().equals(zona.getNombre()))
+            {
+                if(altura >= actual.getAlturaMin() && altura <= actual.getTiempoMax())
+                {
+                    if(tiempo >= actual.getTiempoMin() && tiempo <= actual.getTiempoMax())
+                    {
+                        return actual;
+                    }
+                }
+            }
+        }
+        
+        return null;
+    }
 
 
     @Override
     public BoletinAlerta darBoletinAlerta(EventoSismico evento) {
         
         ReporteSensor reporte = buscarSensorMasCercanoA(evento);
+        if(reporte == null)
+        {
+            System.out.println("REPORTE ES NULL");
+        }
         double altura = reporte.getAltura();
         double velocidad = reporte.getVelocidad();
         double latitud = reporte.getLatitud();
@@ -121,10 +148,17 @@ public class ServicioEventoSismicoMock implements IServicioEventoSismicoMockLoca
         double distanciaEvento = calcularDistancia(zona.getLatitud(), evento.getLatitud(), zona.getLongitud(), evento.getLongitud());
         double tiempoLlegada = distanciaEvento / velocidad;
         
+        Escenario escenario = darEscenarioPremodelado(zona, altura, tiempoLlegada);
         
+        if(escenario == null)
+        {
+            return null;
+        }
         
+        BoletinAlerta boletin = new BoletinAlerta(escenario.getPerfilAlerta(), escenario.getZona(), tiempoLlegada, altura, (int)Math.random());
         
-        return null;
+        return boletin;
+        
     }
     
 }
