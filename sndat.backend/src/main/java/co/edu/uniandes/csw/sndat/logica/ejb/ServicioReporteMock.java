@@ -10,17 +10,16 @@ import co.edu.uniandes.csw.sndat.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.sndat.persistencia.mock.ServicioPersistenciaMock;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioReporteSensorMockLocal;
+import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioReporteSensorMockRemote;
 
 /**
  *
  * @author s.linan10
  */
 @Stateless
-public class ServicioReporteMock implements IServicioReporteSensorMockLocal {
+public class ServicioReporteMock implements IServicioReporteSensorMockLocal, IServicioReporteSensorMockRemote {
     
     private IServicioPersistenciaMockLocal persistencia;
     
@@ -37,7 +36,7 @@ public class ServicioReporteMock implements IServicioReporteSensorMockLocal {
         }
          catch (OperacionInvalidaException ex)
         {
-            Logger.getLogger(ServicioCatalogoMock.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Inválido");
         }
         
     }

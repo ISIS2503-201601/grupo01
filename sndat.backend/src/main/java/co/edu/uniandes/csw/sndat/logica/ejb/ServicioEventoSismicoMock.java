@@ -12,11 +12,10 @@ import co.edu.uniandes.csw.sndat.dto.ReporteSensor;
 import co.edu.uniandes.csw.sndat.dto.ZonaGeografica;
 import co.edu.uniandes.csw.sndat.excepciones.OperacionInvalidaException;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioEventoSismicoMockLocal;
+import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioEventoSismicoMockRemote;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioPersistenciaMockLocal;
 import co.edu.uniandes.csw.sndat.persistencia.mock.ServicioPersistenciaMock;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import co.edu.uniandes.csw.sndat.logica.interfaces.IServicioReporteSensorMockLocal;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
  * @author s.linan10
  */
 @Stateless
-public class ServicioEventoSismicoMock implements IServicioEventoSismicoMockLocal {
+public class ServicioEventoSismicoMock implements IServicioEventoSismicoMockLocal, IServicioEventoSismicoMockRemote {
     
     private IServicioPersistenciaMockLocal persistencia;
     
@@ -43,7 +42,7 @@ public class ServicioEventoSismicoMock implements IServicioEventoSismicoMockLoca
         }
          catch (OperacionInvalidaException ex)
         {
-            Logger.getLogger(ServicioCatalogoMock.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Inválido");
         }
         
     }
