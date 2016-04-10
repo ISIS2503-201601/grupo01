@@ -42,7 +42,6 @@ public class ReporteSensorService {
     public Response getAll() {
         Query q = entityManager.createQuery("select u from ReporteSensor u");
         List<ReporteSensor> reportes = q.getResultList();
-        System.out.println("Fecha reporte "+reportes.get(0).getCreatedAt().toString());
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(reportes).build();
     } 
 
