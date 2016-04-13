@@ -44,7 +44,7 @@
     });
     
           aplicacionMundial.controller("getBoletines", function($http, $scope) {
-    $http.get('http://localhost:8080/service/boletines').
+    $http.get('http://localhost/service/boletines').
       success(function(data, status, headers, config) {
         $scope.boletines = data;
         $scope.bol = data[data.length - 1];
@@ -56,7 +56,7 @@
     });
     
       aplicacionMundial.controller("getReportesSensores", function($http, $scope) {
-    $http.get('http://localhost:8080/service/reportes').
+    $http.get('http://localhost/service/reportes').
       success(function(data, status, headers, config) {
         $scope.reportes = data;
         //alert(JSON.stringify(data));
@@ -67,7 +67,7 @@
     });
     
           aplicacionMundial.controller("getEventosSismicos", function($http, $scope) {
-    $http.get('http://localhost:8080/service/eventosSismicos').
+    $http.get('http://localhost/service/eventosSismicos').
       success(function(data, status, headers, config) {
         $scope.eventos = data;
       }).
