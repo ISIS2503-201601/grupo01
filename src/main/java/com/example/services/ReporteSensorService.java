@@ -8,6 +8,7 @@ package com.example.services;
 import com.example.PersistenceManager;
 import com.example.models.ReporteSensor;
 import com.example.models.ReporteSensorDTO;
+import com.example.security.Hash;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import org.codehaus.jettison.json.JSONObject;
 
 @Path("/reportes")
@@ -54,7 +56,19 @@ public class ReporteSensorService {
         reporteSensorTmp.setLatitud(reporte.getLatitud());
         reporteSensorTmp.setLongitud(reporte.getLongitud());
         reporteSensorTmp.setVelocidad(reporte.getVelocidad());
- 
+        String md5 = reporte.getMd5();
+        
+        boolean integridad = false;
+        String generar = reporte.getAltura()+"-"+reporte.getVelocidad()+"-"+reporte.getLatitud()+"-"+reporte.getLongitud();
+        String digest = Hash.MD5(generar);
+        if(digest.equals(md5))
+        {
+            System.out.println("MD5 "+md5);
+            integridad = true;
+        }
+        
+        if(integridad)
+        {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(reporteSensorTmp);
@@ -72,6 +86,11 @@ public class ReporteSensorService {
             entityManager.close();
         }
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
-    } 
+    }
+        else
+        {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+}
 
 }

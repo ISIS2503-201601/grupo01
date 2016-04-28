@@ -14,16 +14,18 @@ public class EventoSismicoDTO {
     private double longitud;
     private double latitud;
     private double distanciaCosta;
+    private String md5;
 
     public EventoSismicoDTO()
     {
         
     }
     
-    public EventoSismicoDTO(double longitud, double latitud, double distanciaCosta) {
+    public EventoSismicoDTO(double longitud, double latitud, double distanciaCosta, String md) {
         this.longitud = longitud;
         this.latitud = latitud;
         this.distanciaCosta = distanciaCosta;
+        md5 = md;
     }
 
     public double getLongitud() {
@@ -48,6 +50,16 @@ public class EventoSismicoDTO {
 
     public void setDistanciaCosta(double distanciaCosta) {
         this.distanciaCosta = distanciaCosta;
+    }
+    
+    public void setMd5(String m)
+    {
+        md5 = m;
+    }
+    
+    public String getMd5()
+    {
+        return md5;
     }
     
     

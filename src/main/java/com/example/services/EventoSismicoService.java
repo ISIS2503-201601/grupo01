@@ -12,6 +12,7 @@ import com.example.models.EventoSismico;
 import com.example.models.EventoSismicoDTO;
 import com.example.models.ReporteSensor;
 import com.example.models.ReporteSensorDTO;
+import com.example.security.Hash;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import org.codehaus.jettison.json.JSONObject;
 
 @Path("/eventosSismicos")
@@ -61,6 +63,22 @@ public class EventoSismicoService {
         eventoTmp.setLongitud(evento.getLongitud());
         eventoTmp.setLatitud(evento.getLatitud());
         eventoTmp.setDistanciaCosta(evento.getDistanciaCosta());
+        
+        String md5 = evento.getMd5();
+        String md5Gen = Hash.MD5(evento.getLongitud()+"-"+evento.getLatitud()+"-"+evento.getDistanciaCosta());
+        boolean integridad = false;
+        
+        if(md5.equals(md5Gen))
+        {
+            integridad = true;
+        }
+        else
+        {
+            System.out.println("Problema de integridad");
+        }
+        
+        if(integridad)
+        {
 
         try {
             entityManager.getTransaction().begin();
@@ -93,6 +111,11 @@ public class EventoSismicoService {
             entityManager.clear();
             entityManager.close();
             return (bol);
+        }
+        }
+        else
+        {
+            return null;
         }
     }
 }

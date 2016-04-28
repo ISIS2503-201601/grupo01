@@ -6,13 +6,15 @@ public class ReporteSensorDTO {
     private double altura;
     private double latitud;
     private double longitud;
+    private String md5;
  
-    public ReporteSensorDTO(double v, double a, double lat, double lon) 
+    public ReporteSensorDTO(double v, double a, double lat, double lon, String md) 
     {
         velocidad = v;
         altura = a;
         latitud = lat;
         longitud = lon;
+        md5 = md;
     }
     
     public ReporteSensorDTO()
@@ -50,5 +52,13 @@ public class ReporteSensorDTO {
 
     public void setLongitud(double longitud) {
         this.longitud = longitud;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+    
+    public void setMd5(String m) {
+        md5 = m;
     }
 }
