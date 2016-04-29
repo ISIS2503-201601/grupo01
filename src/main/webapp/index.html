@@ -27,7 +27,24 @@ and open the template in the editor.
     </head>
     <body>
         <script type="text/javascript" src="js/angular.min.js"></script>
-        <script type="text/javascript" src="js/AngularControllers/app.js"></script>        
+        <script type="text/javascript" src="js/AngularControllers/app.js"></script>  
+        <script src="https://cdn.auth0.com/js/lock-9.0.min.js"></script>
+<script type="text/javascript">
+  
+  var lock = new Auth0Lock('to9AJwm086crIGMU5X9GNsyJVy9Oodtd', 'slinan.auth0.com');
+  
+  
+  function signin() {
+    lock.show({
+        callbackURL: 'http://*'
+      , responseType: 'code'
+      , authParams: {
+        scope: 'openid profile'
+      }
+    });
+  }
+</script>
+<button onclick="window.signin();">Login</button>
 
     <toolbar></toolbar> 
                
