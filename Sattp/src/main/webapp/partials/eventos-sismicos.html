@@ -1,0 +1,28 @@
+<div class="container" ng-controller="getEventosSismicos">
+<h2 class="form-title">Eventos sísmicos</h2>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <!-- Table -->
+     <table ng-if="totalE.length" datatable-setup class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Distancia a la costa</th>
+            <th>Fecha</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="evento in totalE | orderBy: 'id'">
+            <td>{{evento.id}}</td>
+            <td>{{evento.latitud}}</td>
+            <td>{{evento.longitud}}</td>
+            <td>{{evento.distanciaCosta}}</td>
+            <td>{{evento.createdAt}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div> 
+</div>
